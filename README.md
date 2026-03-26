@@ -7,6 +7,10 @@ Permite gestionar un conjunto de productos utilizando principios de programació
 
 ---
 
+## 📊 Diagrama UML
+
+![UML](docs/Diagrama-UML-Final.png)
+
 ## 🎯 Objetivo
 
 Implementar un sistema flexible y extensible que permita administrar distintos tipos de productos, aplicando conceptos como:
