@@ -7,6 +7,9 @@ package persistencia;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import modelo.Producto;
+import modelo.ProductoAlimenticio;
+import modelo.ProductoElectronico;
+import modelo.ProductoLimpieza;
 
 import java.io.*;
 import java.lang.reflect.Type;
@@ -20,7 +23,6 @@ import java.util.List;
  */
 public class JsonManager {
 
-    // Adaptador para que Gson pueda manejar LocalDate
     private static final Gson gson = new GsonBuilder()
             .registerTypeAdapter(LocalDate.class,
                     (JsonSerializer<LocalDate>) (src, t, ctx) ->
@@ -28,13 +30,29 @@ public class JsonManager {
             .registerTypeAdapter(LocalDate.class,
                     (JsonDeserializer<LocalDate>) (json, t, ctx) ->
                             LocalDate.parse(json.getAsString()))
-            .registerTypeAdapter(Producto.class, new ProductoAdapter())
             .setPrettyPrinting()
             .create();
 
     public void guardar(List<Producto> lista, String ruta) {
         try (Writer writer = new FileWriter(ruta)) {
-            gson.toJson(lista, writer);
+            JsonArray array = new JsonArray();
+
+            for (Producto p : lista) {
+                // Serializamos según el tipo concreto
+                JsonObject obj;
+                if (p instanceof ProductoAlimenticio) {
+                    obj = gson.toJsonTree(p, ProductoAlimenticio.class).getAsJsonObject();
+                } else if (p instanceof ProductoElectronico) {
+                    obj = gson.toJsonTree(p, ProductoElectronico.class).getAsJsonObject();
+                } else {
+                    obj = gson.toJsonTree(p, ProductoLimpieza.class).getAsJsonObject();
+                }
+                // Agregamos el campo tipo manualmente
+                obj.addProperty("tipo", p.getClass().getSimpleName());
+                array.add(obj);
+            }
+
+            gson.toJson(array, writer);
             System.out.println("JSON guardado en: " + ruta);
         } catch (IOException e) {
             System.out.println("Error al guardar JSON: " + e.getMessage());
@@ -42,12 +60,32 @@ public class JsonManager {
     }
 
     public List<Producto> cargar(String ruta) {
+        List<Producto> lista = new ArrayList<>();
         try (Reader reader = new FileReader(ruta)) {
-            Type tipo = new TypeToken<List<Producto>>() {}.getType();
-            return gson.fromJson(reader, tipo);
+            JsonArray array = JsonParser.parseReader(reader).getAsJsonArray();
+
+            for (JsonElement elem : array) {
+                JsonObject obj = elem.getAsJsonObject();
+                JsonElement tipoElem = obj.get("tipo");
+
+                if (tipoElem == null) continue;
+
+                String tipo = tipoElem.getAsString();
+                Producto p = switch (tipo) {
+                    case "ProductoAlimenticio" ->
+                            gson.fromJson(obj, ProductoAlimenticio.class);
+                    case "ProductoElectronico" ->
+                            gson.fromJson(obj, ProductoElectronico.class);
+                    case "ProductoLimpieza" ->
+                            gson.fromJson(obj, ProductoLimpieza.class);
+                    default -> null;
+                };
+
+                if (p != null) lista.add(p);
+            }
         } catch (IOException e) {
             System.out.println("Error al cargar JSON: " + e.getMessage());
-            return new ArrayList<>();
         }
+        return lista;
     }
 }
