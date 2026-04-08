@@ -8,6 +8,8 @@ package excepciones;
  *
  * @author Luca
  */
-public class ProductoNoEncontradoException {
-    
+public class ProductoNoEncontradoException extends Exception {
+    public ProductoNoEncontradoException(int id) {
+        super("No se encontró ningún producto con el ID: " + id);
+    }
 }

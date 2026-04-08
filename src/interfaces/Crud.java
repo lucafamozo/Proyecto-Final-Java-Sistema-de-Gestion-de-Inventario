@@ -4,10 +4,15 @@
  */
 package interfaces;
 
+import java.util.List;
+
 /**
  *
  * @author Luca
  */
-public class Crud {
-    
+public interface Crud<T> {
+    void agregar(T item);
+    void eliminar(int id);
+    void actualizar(T item);
+    List<T> listar();
 }

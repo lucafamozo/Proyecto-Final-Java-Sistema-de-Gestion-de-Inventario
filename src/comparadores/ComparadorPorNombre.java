@@ -4,10 +4,16 @@
  */
 package comparadores;
 
+import modelo.Producto;
+import java.util.Comparator;
+
 /**
  *
  * @author Luca
  */
-public class ComparadorPorNombre {
-    
+public class ComparadorPorNombre implements Comparator<Producto> {
+    @Override
+    public int compare(Producto p1, Producto p2) {
+        return p1.getNombre().compareToIgnoreCase(p2.getNombre());
+    }
 }
