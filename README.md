@@ -1,9 +1,27 @@
-# Sistema de Gestión de Inventario (Java)
+## Inventario de Productos (Java)
 
-## 📌 Descripción
+## Sobre mí
 
-Aplicación desarrollada en Java como proyecto final de Programación II.
-Permite gestionar un conjunto de productos utilizando principios de programación orientada a objetos, estructuras de datos y persistencia de información.
+Soy **Luca Famozo**. Este repositorio corresponde al **Final de Programación II (Java)**.
+
+## Resumen
+
+Aplicación de escritorio para **gestionar productos** (inventario/stock) con:
+
+- **CRUD**: alta, baja, modificación y listado.
+- **Ordenamiento**: criterio natural (`Comparable`) + comparadores por **precio** y **stock**.
+- **Filtrado**: con **wildcards** (`? extends`, `? super`).
+- **Cambios masivos**: usando **interfaces funcionales** (`Consumer`) para modificar precio/stock.
+- **Persistencia**: **DAT (serialización)**, **CSV** y **JSON**.
+- **Exportación TXT**: reporte legible con encabezado.
+- **Interfaz gráfica JavaFX**: operaciones y persistencia desde UI.
+
+## Capturas / demostración
+
+Agregar acá capturas de la UI JavaFX (recomendado):
+
+- `docs/ui-1.png`
+- `docs/ui-2.png`
 
 ---
 
@@ -11,70 +29,53 @@ Permite gestionar un conjunto de productos utilizando principios de programació
 
 ![UML](docs/Diagrama-UML-Final.png)
 
-## 🎯 Objetivo
+## Cómo ejecutar (NetBeans)
 
-Implementar un sistema flexible y extensible que permita administrar distintos tipos de productos, aplicando conceptos como:
+1. Abrir el proyecto en NetBeans.
+2. Ejecutar la clase principal: `ui.Main`
+   - Primero corre `ui.ConsoleDemo` (pruebas por consola).
+   - Luego abre `ui.MainApp` (JavaFX).
 
-* Herencia
-* Polimorfismo
-* Interfaces
-* Genéricos
-* Manejo de colecciones
-
----
-
-## ⚙️ Funcionalidades principales
-
-* Alta, baja y modificación de productos (CRUD)
-* Listado completo de productos
-* Ordenamiento y filtrado
-* Manejo de diferentes tipos de productos:
-
-  * Alimenticios
-  * Electrónicos
-  * Limpieza
-* Aplicación de descuentos (según tipo)
-* Persistencia de datos en:
-
-  * CSV
-  * JSON
-  * Serialización
+Si JavaFX no abre, configurar el **JavaFX SDK** en el proyecto (Module Path + VM Options).
 
 ---
 
 ## 🧱 Estructura del proyecto
 
-* `model` → clases principales (Producto y derivados)
-* `service` → lógica del negocio (GestorProductos)
-* `persistence` → manejo de archivos
-* `util` → utilidades
-* `exception` → manejo de errores
-* `ui` → interacción con el usuario
+- **`model`**: clases principales (`Producto` abstracta + derivadas) y `Categoria` (enum)
+- **`service`**: `Crud<T>`, `GestorProductos<T extends Producto>`, `ProductoIterator<T>`, `Descontable`
+- **`comparator`**: `PrecioComparator`, `StockComparator`
+- **`persistence`**: `Serializador`, `CsvManager`, `JsonManager`, `TxtExporter`
+- **`exceptions`**: `ProductoNoEncontradoException`, `StockInvalidoException`
+- **`ui`**: `ConsoleDemo`, `MainApp` (JavaFX), `Main` (entrypoint)
 
 ---
 
-## 🧩 Tecnologías utilizadas
+## Archivos generados (con ejemplos)
+
+Se generan en la carpeta `data/` al ejecutar `ConsoleDemo` o desde la UI:
+
+- **`productos.dat`**: lista serializada de productos.
+- **`productos.csv`**: export/import en CSV con encabezado.
+- **`productos.json`**: export/import en JSON.
+- **`reporte_filtrado.txt`**: reporte TXT de una **lista filtrada**.
+- **`reporte_ui.txt`**: reporte TXT exportado desde la interfaz.
+
+---
+
+## Tecnologías
 
 * Java
+* JavaFX
 * NetBeans
-* Colecciones (List, Iterator)
-* Manejo de archivos
-
----
-
-## 📊 Diseño
-
-El sistema fue modelado utilizando UML, aplicando:
-
-* Clases abstractas
-* Interfaces (`Crud`, `Descontable`, `Iterable`)
-* Relaciones de herencia y agregación
+* Colecciones (List, Iterator) + Genéricos
+* Manejo de archivos (DAT/CSV/JSON/TXT)
 
 ---
 
 ## 🚀 Estado del proyecto
 
-En desarrollo — implementación progresiva de funcionalidades.
+Listo para ejecutar.
 
 ---
 
