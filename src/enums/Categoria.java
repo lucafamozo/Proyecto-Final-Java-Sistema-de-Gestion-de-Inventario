@@ -9,7 +9,27 @@ package enums;
  * @author Luca
  */
 public enum Categoria {
-    ALIMENTOS,
-    ELECTRONICA,
-    LIMPIEZA
+     // Sin categoría (valor por defecto)
+    SIN_CATEGORIA,
+    
+    // Alimenticio
+    LACTEOS,
+    BEBIDAS,
+    CARNES,
+    VERDURAS,
+    PANADERIA,
+
+    // Electrónico
+    TELEFONIA,
+    COMPUTACION,
+    ELECTRODOMESTICOS,
+    AUDIO_VIDEO,
+    GAMING,
+
+    // Limpieza
+    DESINFECTANTES,
+    DETERGENTES,
+    AMBIENTADORES,
+    INSECTICIDAS,
+    CUIDADO_PERSONAL
 }

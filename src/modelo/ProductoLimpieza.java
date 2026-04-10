@@ -11,6 +11,8 @@ import enums.Categoria;
  * @author Luca
  */
 public class ProductoLimpieza extends Producto {
+    
+    private static final long serialVersionUID = 1L;
 
     private String tipoUso;
     private boolean esBiodegradable;
@@ -31,7 +33,7 @@ public class ProductoLimpieza extends Producto {
 
     // Constructor mínimo
     public ProductoLimpieza(int id, String nombre, double precio) {
-        this(id, nombre, precio, 0, Categoria.LIMPIEZA, "General", false);
+        this(id, nombre, precio, 0, Categoria.SIN_CATEGORIA, "General", false);
     }
 
     // Los biodegradables tienen un 5% adicional en el precio final

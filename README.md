@@ -1,84 +1,86 @@
-## Inventario de Productos (Java)
+# Inventario de Productos (Java)
 
 ## Sobre mí
 
-Soy **Luca Famozo**. Este repositorio corresponde al **Final de Programación II (Java)**.
+Soy **Luca Famozo**. Este repositorio corresponde al **Final de Programación II (Java)** de la **UTN Avellaneda**.
 
 ## Resumen
 
-Aplicación de escritorio para **gestionar productos** (inventario/stock) con:
+Aplicación de escritorio para **gestionar productos** (inventario/stock) desarrollada en Java con interfaz gráfica JavaFX.
 
-- **CRUD**: alta, baja, modificación y listado.
-- **Ordenamiento**: criterio natural (`Comparable`) + comparadores por **precio** y **stock**.
-- **Filtrado**: con **wildcards** (`? extends`, `? super`).
-- **Cambios masivos**: usando **interfaces funcionales** (`Consumer`) para modificar precio/stock.
-- **Persistencia**: **DAT (serialización)**, **CSV** y **JSON**.
-- **Exportación TXT**: reporte legible con encabezado.
-- **Interfaz gráfica JavaFX**: operaciones y persistencia desde UI.
+Permite administrar tres tipos de productos: **Alimenticios**, **Electrónicos** y **de Limpieza**, cada uno con sus propias características y lógica de precio final.
 
-## Capturas / demostración
+### Funcionalidades principales
 
-Agregar acá capturas de la UI JavaFX (recomendado):
+- **CRUD**: agregar, listar, editar y eliminar productos desde la interfaz gráfica.
+- **Ordenamiento**: por criterio natural (`Comparable`) y por **precio** o **nombre** (`Comparator`).
+- **Filtrado**: búsqueda por nombre con **wildcards** (`? extends`, `? super`).
+- **Cambios masivos**: aumentar precio 10% (`Consumer`) y aplicar descuento 5% (`Function`).
+- **Persistencia**: guardado y carga en **DAT** (serialización), **CSV** y **JSON**.
+- **Exportación TXT**: reporte legible con encabezado exportable desde la UI.
+- **Excepciones propias**: `ProductoNoEncontradoException` y `StockInsuficienteException`.
 
-- `docs/ui-1.png`
-- `docs/ui-2.png`
+## Capturas de la interfaz
+
+> Agregar capturas de pantalla de la aplicación aquí.
 
 ---
 
-## 📊 Diagrama UML
+## Diagrama UML
 
 ![UML](docs/Diagrama-UML-Final.png)
 
-## Cómo ejecutar (NetBeans)
+---
 
-1. Abrir el proyecto en NetBeans.
-2. Ejecutar la clase principal: `ui.Main`
-   - Primero corre `ui.ConsoleDemo` (pruebas por consola).
-   - Luego abre `ui.MainApp` (JavaFX).
+## Estructura del proyecto
 
-Si JavaFX no abre, configurar el **JavaFX SDK** en el proyecto (Module Path + VM Options).
+```
+src/
+├── comparadores/    → ComparadorPorPrecio, ComparadorPorNombre
+├── enums/           → Categoria
+├── excepciones/     → ProductoNoEncontradoException, StockInsuficienteException
+├── gestor/          → GestorProductos<T extends Producto>
+├── interfaces/      → Crud<T>, Descontable
+├── modelo/          → Producto (abstracta), ProductoAlimenticio, ProductoElectronico, ProductoLimpieza
+├── persistencia/    → CsvManager, JsonManager, Serializador, TxtExporter
+├── ui/              → MainApp, ProductoController, DialogoProducto
+└── Main.java
+```
 
 ---
 
-## 🧱 Estructura del proyecto
+## Archivos generados
 
-- **`model`**: clases principales (`Producto` abstracta + derivadas) y `Categoria` (enum)
-- **`service`**: `Crud<T>`, `GestorProductos<T extends Producto>`, `ProductoIterator<T>`, `Descontable`
-- **`comparator`**: `PrecioComparator`, `StockComparator`
-- **`persistence`**: `Serializador`, `CsvManager`, `JsonManager`, `TxtExporter`
-- **`exceptions`**: `ProductoNoEncontradoException`, `StockInvalidoException`
-- **`ui`**: `ConsoleDemo`, `MainApp` (JavaFX), `Main` (entrypoint)
+Se generan en la carpeta raíz del proyecto al usar la aplicación:
+
+| Archivo | Descripción |
+|---|---|
+| `productos.dat` | Lista serializada de productos |
+| `productos.csv` | Exportación/importación en formato CSV |
+| `productos.json` | Exportación/importación en formato JSON |
+| `productos.txt` | Reporte legible exportado desde la UI |
 
 ---
 
-## Archivos generados (con ejemplos)
+## Cómo ejecutar
 
-Se generan en la carpeta `data/` al ejecutar `ConsoleDemo` o desde la UI:
-
-- **`productos.dat`**: lista serializada de productos.
-- **`productos.csv`**: export/import en CSV con encabezado.
-- **`productos.json`**: export/import en JSON.
-- **`reporte_filtrado.txt`**: reporte TXT de una **lista filtrada**.
-- **`reporte_ui.txt`**: reporte TXT exportado desde la interfaz.
+1. Abrí el proyecto en **NetBeans**.
+2. Configurá el **JavaFX SDK** en el proyecto (Module Path + VM Options).
+3. Ejecutá la clase principal `Main.java`.
 
 ---
 
 ## Tecnologías
 
-* Java
-* JavaFX
-* NetBeans
-* Colecciones (List, Iterator) + Genéricos
-* Manejo de archivos (DAT/CSV/JSON/TXT)
+- Java 21
+- JavaFX
+- Apache NetBeans 22
+- Gson (para JSON)
+- Colecciones genéricas, Iterator, Wildcards
+- Serialización y manejo de archivos (DAT / CSV / JSON / TXT)
 
 ---
 
-## 🚀 Estado del proyecto
+## Autor
 
-Listo para ejecutar.
-
----
-
-## 👤 Autor
-
-Luca Famozo
+**Luca Famozo** — UTN Avellaneda, Programación II, 2024

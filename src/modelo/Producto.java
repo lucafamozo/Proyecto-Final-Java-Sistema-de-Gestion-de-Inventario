@@ -14,6 +14,8 @@ import java.io.Serializable;
 
 public abstract class Producto implements Comparable<Producto>, Serializable {
 
+    private static final long serialVersionUID = 1L;
+    
     private int id;
     private String nombre;
     private double precio;
@@ -31,12 +33,11 @@ public abstract class Producto implements Comparable<Producto>, Serializable {
 
     // Constructor sin categoria
     public Producto(int id, String nombre, double precio, int stock) {
-        this(id, nombre, precio, stock, Categoria.ALIMENTOS);
+        this(id, nombre, precio, stock, Categoria.SIN_CATEGORIA);
     }
 
-    // Constructor mínimo
     public Producto(int id, String nombre) {
-        this(id, nombre, 0.0, 0, Categoria.ALIMENTOS);
+        this(id, nombre, 0.0, 0, Categoria.SIN_CATEGORIA);
     }
 
     // Método abstracto que cada subclase implementa

@@ -5,13 +5,21 @@
 package ui;
 
 import javafx.application.Application;
+import javafx.stage.Stage;
 
 /**
  *
  * @author Luca
  */
-public class Main {
+public class MainApp extends Application {
+
+    @Override
+    public void start(Stage stage) {
+        ProductoController controller = new ProductoController(stage);
+        controller.mostrar();
+    }
+
     public static void main(String[] args) {
-        Application.launch(ui.MainApp.class, args);
+        launch(args);
     }
 }

@@ -4,6 +4,8 @@
  */
 package interfaces;
 
+import excepciones.ProductoNoEncontradoException;
+import excepciones.StockInsuficienteException;
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ import java.util.List;
  */
 public interface Crud<T> {
     void agregar(T item);
-    void eliminar(int id);
-    void actualizar(T item);
+    void eliminar(int id) throws ProductoNoEncontradoException, StockInsuficienteException;
+    void actualizar(T item) throws ProductoNoEncontradoException;
     List<T> listar();
 }

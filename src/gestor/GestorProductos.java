@@ -5,6 +5,7 @@
 package gestor;
 
 import excepciones.ProductoNoEncontradoException;
+import excepciones.StockInsuficienteException;
 import interfaces.Crud;
 import modelo.Producto;
 
@@ -22,6 +23,7 @@ import java.util.function.Function;
 public class GestorProductos<T extends Producto> implements Crud<T>, Iterable<T> {
 
     private List<T> lista;
+    private int contadorId = 1;
 
     public GestorProductos() {
         this.lista = new ArrayList<>();
@@ -31,33 +33,42 @@ public class GestorProductos<T extends Producto> implements Crud<T>, Iterable<T>
 
     @Override
     public void agregar(T item) {
+        if (item.getId() == 0) {
+            // Producto nuevo desde la UI
+            item.setId(contadorId++);
+        } else {
+            // Producto cargado desde archivo, actualizamos el contador
+            if (item.getId() >= contadorId) {
+                contadorId = item.getId() + 1;
+            }
+        }
         lista.add(item);
     }
 
     @Override
-    public void eliminar(int id) {
-        try {
-            T producto = buscarPorId(id);
-            lista.remove(producto);
-        } catch (ProductoNoEncontradoException e) {
-            System.out.println("Error al eliminar: " + e.getMessage());
+    public void eliminar(int id) throws ProductoNoEncontradoException, StockInsuficienteException {
+        T producto = buscarPorId(id);
+        if (producto.getStock() == 0) {
+            throw new StockInsuficienteException(producto.getNombre(), producto.getStock());
         }
+        lista.remove(producto);
     }
 
     @Override
-    public void actualizar(T item) {
-        try {
-            T existente = buscarPorId(item.getId());
-            int index = lista.indexOf(existente);
-            lista.set(index, item);
-        } catch (ProductoNoEncontradoException e) {
-            System.out.println("Error al actualizar: " + e.getMessage());
-        }
+    public void actualizar(T item) throws ProductoNoEncontradoException {
+        T existente = buscarPorId(item.getId());
+        int index = lista.indexOf(existente);
+        lista.set(index, item);
     }
 
     @Override
     public List<T> listar() {
         return new ArrayList<>(lista);
+    }
+
+    public void limpiar() {
+        lista.clear();
+        contadorId = 1;
     }
 
     // ── BÚSQUEDA ──────────────────────────────────────────────────────────────
@@ -83,8 +94,11 @@ public class GestorProductos<T extends Producto> implements Crud<T>, Iterable<T>
     public List<T> filtrar(List<? extends Producto> origen) {
         List<T> resultado = new ArrayList<>();
         for (Producto p : origen) {
-            if (lista.contains(p)) {
-                resultado.add((T) p);
+            for (T item : lista) {
+                if (item.getId() == p.getId()) {
+                    resultado.add(item);
+                    break;
+                }
             }
         }
         return resultado;
@@ -97,14 +111,12 @@ public class GestorProductos<T extends Producto> implements Crud<T>, Iterable<T>
 
     // ── INTERFACES FUNCIONALES ────────────────────────────────────────────────
 
-    // Consumer: aplica una acción a cada producto (ej: imprimir, modificar precio)
     public void modificar(Consumer<T> accion) {
         for (T item : lista) {
             accion.accept(item);
         }
     }
 
-    // Function: transforma cada producto y reemplaza en la lista
     public void transformar(Function<T, T> funcion) {
         for (int i = 0; i < lista.size(); i++) {
             lista.set(i, funcion.apply(lista.get(i)));

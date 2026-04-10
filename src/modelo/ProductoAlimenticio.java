@@ -13,6 +13,8 @@ import java.time.LocalDate;
  * @author Luca
  */
 public class ProductoAlimenticio extends Producto implements Descontable {
+    
+    private static final long serialVersionUID = 1L;
 
     private LocalDate fechaVencimiento;
     private double peso;
@@ -33,7 +35,7 @@ public class ProductoAlimenticio extends Producto implements Descontable {
 
     // Constructor mínimo
     public ProductoAlimenticio(int id, String nombre, double precio) {
-        this(id, nombre, precio, 0, Categoria.ALIMENTOS, LocalDate.now(), 0.0);
+        this(id, nombre, precio, 0, Categoria.SIN_CATEGORIA, LocalDate.now(), 0.0);
     }
 
     // Si está por vencer (menos de 7 días) aplica 20% de descuento

@@ -13,6 +13,8 @@ import interfaces.Descontable;
  */
 public class ProductoElectronico extends Producto implements Descontable {
 
+    private static final long serialVersionUID = 1L;
+    
     private String marca;
     private int garantiaMeses;
 
@@ -32,7 +34,7 @@ public class ProductoElectronico extends Producto implements Descontable {
 
     // Constructor mínimo
     public ProductoElectronico(int id, String nombre, double precio) {
-        this(id, nombre, precio, 0, Categoria.ELECTRONICA, "Sin marca", 12);
+        this(id, nombre, precio, 0, Categoria.SIN_CATEGORIA, "Sin marca", 12);
     }
 
     // Electrónicos con más de 24 meses de garantía tienen 10% extra de precio

@@ -1,0 +1,7 @@
+build/
+dist/
+javafx-sdk-21.0.2/
+*.dat
+*.csv
+*.json
+*.txt

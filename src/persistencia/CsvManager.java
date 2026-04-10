@@ -79,7 +79,14 @@ public class CsvManager {
             String nombre    = partes[2];
             double precio    = Double.parseDouble(partes[3]);
             int stock        = Integer.parseInt(partes[4]);
-            Categoria cat    = Categoria.valueOf(partes[5]);
+
+            // Si la categoría es "null" o vacía, usa SIN_CATEGORIA
+            Categoria cat;
+            try {
+                cat = Categoria.valueOf(partes[5]);
+            } catch (IllegalArgumentException | NullPointerException e) {
+                cat = Categoria.SIN_CATEGORIA;
+            }
 
             return switch (tipo) {
                 case "ProductoAlimenticio" -> new ProductoAlimenticio(
@@ -100,5 +107,5 @@ public class CsvManager {
             System.out.println("Error al parsear línea: " + linea);
             return null;
         }
-    }
+    } 
 }
