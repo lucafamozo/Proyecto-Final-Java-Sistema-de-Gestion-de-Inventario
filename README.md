@@ -22,7 +22,8 @@ Permite administrar tres tipos de productos: **Alimenticios**, **Electrónicos**
 
 ## Capturas de la interfaz
 
-> Agregar capturas de pantalla de la aplicación aquí.
+![Pantalla principal](docs/Panel-Principal.png)
+![Agregar producto](docs/Agregar-Producto.png)
 
 ---
 
