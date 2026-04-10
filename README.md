@@ -24,6 +24,7 @@ Permite administrar tres tipos de productos: **Alimenticios**, **Electrónicos**
 
 ![Pantalla principal](docs/Panel-Principal.png)
 ![Agregar producto](docs/Agregar-Producto.png)
+![Agregar producto](docs/Descuento.png)
 
 ---
 
